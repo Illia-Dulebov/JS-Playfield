@@ -1,5 +1,6 @@
-export default function printResults(data) {
+import printSummary from "./printSummary.js";
 
+export default function printResults(data) {
     if(data instanceof Map) {
         for(const [key, value] of data) {
             console.log(`${key} | ${value}`);
@@ -8,13 +9,9 @@ export default function printResults(data) {
     }
 
     if(data instanceof Array) {
-        let finalString = '';
         for(const value of data) {
-            finalString += `${value} `;
+            printSummary([value]);
         }
-
-        console.log(`${finalString}\n`);
         console.log('\n');
-
     }
 }

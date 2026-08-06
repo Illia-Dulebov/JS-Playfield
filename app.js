@@ -1,16 +1,28 @@
-import { Currency, Payment, Category } from "./enums.js";
-import { expense } from "./data/expense.js";
-import calculateTotal from "./functions/statistics_calculations/calculateTotal.js";
-import expenses from "./data/expenses.js";
-import findExpensiveItems from "./functions/statistics_calculations/findExpesiveItems.js";
-import calculateTotalByCategories from "./functions/statistics_calculations/calculateTotalByCategories.js";
-import printResults from "./functions/output_operations/printResults.js";
+import ExpenseManager from "./managers/ExpenseManager.js";
+import onAddExpense from "./functions/crud_operations/onAddExpense.js";
+import renderExpenses from "./functions/renderExpenses.js";
 
-let totalExpenses = calculateTotal(expenses);
-printResults(totalExpenses);
+const manager = new ExpenseManager();
 
-let expensiveItems = findExpensiveItems(expenses, 10);
-printResults(expensiveItems);
+const descriptionInputElement = document.getElementById("description");
+const amountInputElement = document.getElementById("amount");
 
-let totalExpensesByCategories = calculateTotalByCategories(expenses);
-printResults(totalExpensesByCategories);
+const createExpenseButtonElement = document.getElementById("add-expense");
+
+const expensesListElement = document.getElementById("expenses-list");
+
+createExpenseButtonElement.addEventListener('click', () => {
+    onAddExpense(manager.getNextId(), descriptionInputElement.value, Number(amountInputElement.value), (expense) => manager.addExpense(expense));
+    refreshExpenses();
+});
+
+
+function refreshExpenses() {
+    renderExpenses(
+        manager.getAllExpenses(),
+        (id) => manager.deleteExpense(id),
+        expensesListElement
+    );
+}
+
+export default refreshExpenses;
