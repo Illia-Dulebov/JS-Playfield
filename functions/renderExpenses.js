@@ -1,4 +1,4 @@
-import refreshExpenses from "../app";
+import createExpenseDeleteButton from "./createExpenseDeleteButton.js";
 
 export default function renderExpenses(expenses, deleteExpense, expensesListElement) {
     
@@ -10,10 +10,7 @@ export default function renderExpenses(expenses, deleteExpense, expensesListElem
 
         expensesContainer.textContent = `${expense.id} | ${expense.description} : ${expense.amount} ${expense.currency}`;
 
-        createExpenseDeleteButton(expensesContainer, expense.id, (id) => {
-            deleteExpense(id);
-            refreshExpenses();
-        });
+        createExpenseDeleteButton(expensesContainer, expense.id, deleteExpense);
 
         expensesListElement.append(expensesContainer);
     });

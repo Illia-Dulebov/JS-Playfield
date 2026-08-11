@@ -6,7 +6,7 @@ class Expense {
     #currency;
 
     constructor({id, description, amount, currency, payment, category, date} = {}) {
-        this.#id = id ?? 0;
+        this.#id = crypto.randomUUID();
         this.description = description ?? '';
         this.changeAmount(amount);
         this.changeCurrency(currency);
@@ -41,6 +41,30 @@ class Expense {
         }
 
         this.#currency = currency;
+    }
+
+    toJSON() {
+        return {
+            id: this.#id,
+            description: this.description,
+            amount: this.#amount,
+            currency: this.#currency,
+            payment: this.payment,
+            category: this.category,
+            date: this.date,
+        };
+    }
+
+    static fromJSON(json) {
+        return new Expense({
+            id: json.id,
+            description: json.description,
+            amount: json.amount,
+            currency: json.currency,
+            payment: json.payment,
+            category: json.category,
+            date: new Date(json.date),
+        });
     }
 
 }

@@ -1,10 +1,9 @@
 import Expense from "../../models/Expense.js";
 import { Currency, Payment, Category } from "../../enums/enums.js";
 
-export default function onAddExpense(id, description, amount, addExpense) {
+export default function onAddExpense(description, amount, addExpense) {
     
     const newExpense = new Expense({
-        id: id,
         description: description,
         amount: amount,
         currency: Currency.LEKE,
